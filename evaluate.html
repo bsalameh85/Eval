@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>تقييم - نظام تقييم أداء الموظفين</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css"></head><body>
+<header class="top noprint"><a class="brand" href="index.html">نظام تقييم أداء الموظفين</a><nav><a href="index.html">الرئيسية</a></nav></header>
+<div class="toolbar noprint">
+  <div><b id="formName"></b></div>
+  <div class="genbar"><b>⚡ تعبئة تلقائية من البنك:</b>
+    <button type="button" class="btn alt" id="btnGen">توليد تقييم جديد</button>
+    <small>يتم التوليد تلقائياً عند اختيار المسمى الوظيفي</small></div>
+  <div class="genbar namesbar"><b>👥 تسلسل الأسماء (تُوزَّع تلقائياً في أماكنها بالنموذج):</b>
+    <label>تاريخ التقييم <input type="date" data-emp="evdate"></label>
+    <label>الموظف <input data-emp="name" placeholder="اسم الموظف"></label>
+    <label>الرئيس المباشر <input data-emp="boss1" placeholder="اسم الرئيس المباشر"></label>
+    <label>الرئيس الأعلى المباشر <input data-emp="boss2" placeholder="اسم الرئيس الأعلى المباشر"></label></div>
+  <div class="genbar targetbar"><b>🎯 العلامة المطلوبة (من 100):</b>
+    <input type="number" id="target" data-m="target" min="0" max="100" step="0.01" placeholder="مثال: 87.5">
+    <button type="button" class="btn alt" id="btnDist">توزيع العلامة تلقائياً</button> <span id="distMsg" class="muted"></span>
+    <small>يوزّع العلامة على النتائج والكفايات وعناصر التميز ليكون المجموع النهائي مساوياً لها. وعند تعبئتها يستخدمها زر «توليد تقييم جديد» أيضاً.</small></div>
+  <div><button class="btn alt" onclick="window.print()">🖨 طباعة</button></div>
+</div>
+<div id="warn" class="err noprint"></div>
+<div id="paper"></div>
+<script src="assets/data.js"></script>
+<script src="assets/bank.js"></script>
+<script>
+(function () {
+  const D = window.APP_DATA, type = new URLSearchParams(location.search).get('type'), f = D.forms[type];
+  if (!f) { location.replace('index.html'); return; }
+  document.title = f.name + ' - نظام تقييم أداء الموظفين';
+  document.getElementById('formName').textContent = f.name;
+  window.FORM = { type: type, name: f.name, code: f.code, cat: f.cat, r: f.r, c: f.c, e: f.e, mode: f.mode, scale: f.scale,
+    comps: D.comps, excel: D.excel, trial: D.trial, titles: window.Bank.titles, dev: D.devPlan, owner: D.devOwner };
+  window.DATA = null;
+})();
+</script>
+<script src="assets/evaluate.js"></script></body></html>
